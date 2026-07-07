@@ -13,15 +13,15 @@ three transports, all authenticated with the same Bearer API key.
 
 - **MCP server** — `https://mcp.raster.app/` (Streamable HTTP). For agent clients
   such as Claude, Cursor, and the OpenAI Responses API. Docs:
-  `https://docs.raster.app/api/mcp`
-- **REST** — `https://api.raster.app`. Docs: `https://docs.raster.app/api/rest`
-- **GraphQL** — `https://api.raster.app`. Docs: `https://docs.raster.app/api/graphql`
+  `https://raster.app/docs/api/mcp`
+- **REST** — `https://api.raster.app`. Docs: `https://raster.app/docs/api/rest`
+- **GraphQL** — `https://api.raster.app`. Docs: `https://raster.app/docs/api/graphql`
 
 ## Authentication
 
 Send `Authorization: Bearer <API_KEY>`. A key is scoped to one organization and
 an allowlist of libraries, each at a read or write access level. Create and scope
-keys in organization settings. Details: `https://docs.raster.app/api/rest/authentication`
+keys in organization settings. Details: `https://raster.app/docs/api/rest/authentication`
 
 ## Start with no account
 
@@ -29,7 +29,7 @@ An agent with no key can create an organization, a starter library, and a usable
 API key from a user's email in one call — `create_organization` over MCP, or
 `POST https://api.raster.app/libraries` over REST. The agent uploads right away;
 the user claims the library into a real account later from an emailed link.
-Guide: `https://docs.raster.app/guides/start-without-an-account`
+Guide: `https://raster.app/docs/guides/start-without-an-account`
 
 ## The loop
 
@@ -62,7 +62,7 @@ library, and a key, then run the loop.
 - **Structure** — `create_library`, `rename_library`.
 - **Start with no account** — `create_organization`.
 
-Parameters and limits for every tool: `https://docs.raster.app/api/mcp/tools`.
+Parameters and limits for every tool: `https://raster.app/docs/api/mcp/tools`.
 
 ## Gotchas
 
@@ -89,4 +89,4 @@ return                                            → asset url + claimUrl (user
 ## Runbook
 
 The full agent runbook — discovery, connecting, and the upload/tag/search/hand-off
-loop — is at `https://docs.raster.app/guides/ai-agents`.
+loop — is at `https://raster.app/docs/guides/ai-agents`.
