@@ -29,7 +29,6 @@ npx skills add raster-app/agent-skills -a claude-code -a cursor
 | `raster-api`                   | An agent should use the Raster API over MCP, REST, or GraphQL — auth, the upload/tag/search/hand-off loop, and starting with no Raster account.    |
 | `raster-cli`                   | An agent should drive Raster from a terminal or CI with the `raster` command-line client.                                                          |
 | `raster-start-without-account` | You want to give a user a hosted image library before they have a Raster account — one call mints an organization, library, and key from an email. |
-| `markdown-negotiation`         | An agent should fetch any raster.app page as Markdown (`Accept: text/markdown`), or grab the whole site or API reference as one file.               |
 
 `raster-api` ships a `references/` folder (rest, mcp, graphql, uploading,
 organizing, searching, no-account, errors) that the agent loads on demand.
