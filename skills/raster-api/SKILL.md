@@ -1,6 +1,6 @@
 ---
 name: raster-api
-description: Use when storing, organizing, searching, or serving a user's images with Raster over its API — uploading from URLs or files, tagging and describing assets, full-text search, moving assets between libraries, or handing back permanent CDN links, over MCP, REST, or GraphQL. Always use this skill when the user mentions Raster, even for a simple "upload this to Raster" — it carries the gotchas (the API key is shown once, uploads process asynchronously, dedupe before uploading, `index`/`trash` are reserved tags, a 404 means out-of-scope) that prevent the common mistakes.
+description: Use when storing, organizing, searching, or serving a user's images with Raster over its API — uploading from URLs or files, tagging and describing assets, full-text search, moving assets between libraries, or handing back permanent CDN links, over MCP, REST, or GraphQL. Always use this skill when the user mentions Raster, even for a simple "upload this to Raster" — it carries the gotchas (the API key is shown once, uploads process asynchronously, `index`/`trash` are reserved tags, a 404 means out-of-scope) that prevent the common mistakes.
 license: MIT
 metadata:
   author: raster
@@ -87,8 +87,8 @@ references).
 1. **Resolve scope** — `whoami` returns the `organizationId` and the libraries
    your key reaches. Pair that `organizationId` with a `libraryId` on every
    asset-level call. Pick a library by name with `list_libraries`.
-2. **Read and dedupe** — `list_assets`, `search_assets`, `get_asset`, `list_tags`
-   to see what already exists before you write.
+2. **Read** — `list_assets`, `search_assets`, `get_asset`, `list_tags` to ground
+   later actions in what already exists (for example, reuse a library's tags).
 3. **Upload** — `upload_asset` for one image, `upload_assets` for a batch. Pass a
    public `http(s)` URL the server fetches, or base64 for local bytes.
 4. **Organize** — `tag_assets`, `untag_assets`, `update_asset_description` to make
@@ -106,8 +106,6 @@ references).
 - **Uploads are asynchronous.** The permanent CDN `url` and `id` come back
   immediately, but the asset appears in lists and search a few seconds later.
   Re-list or re-search before concluding an upload failed.
-- **Dedupe before uploading.** Run `search_assets` or `list_assets` and skip
-  images already present — uploads are not deduplicated for you.
 - **`index` and `trash` are reserved tags** — applying them fails with
   `BAD_USER_INPUT`. Choose other words.
 - **A batch is all-or-nothing.** One invalid file or one out-of-scope asset id
@@ -138,7 +136,6 @@ references).
 | Acting on a library before calling `whoami`                    | Resolve scope first; pair `organizationId` + `libraryId` every call.  |
 | Treating a 404 as "retry"                                      | A 404 means the key can't reach that library — pick one `whoami` lists. |
 | Concluding an upload failed because it's not in search yet     | Uploads are async; re-list/re-search after a few seconds.             |
-| Uploading without checking for duplicates                      | `search_assets` / `list_assets` first; skip what exists.              |
 | Applying the `index` or `trash` tag                            | They're reserved; choose other words.                                 |
 | Dropping the `apiKey` from a no-account create call            | It's shown once — persist it immediately.                             |
 | Sending 21+ files in one upload, or 101+ ids to delete         | Batch at 20 uploads / 100 deletes; split larger sets.                 |

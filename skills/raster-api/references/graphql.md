@@ -36,7 +36,7 @@ Mutations
 
 ## Examples
 
-Read and dedupe:
+Search:
 
 ```graphql
 query {

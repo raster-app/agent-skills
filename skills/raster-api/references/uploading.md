@@ -11,11 +11,6 @@ Raster ingests an image three ways; pick the one your source and transport allow
 Every path returns each asset's permanent CDN `url` and `id` right away — that
 `url` is the canonical link you hand back.
 
-## Before you upload
-
-Dedupe first. Uploads are not deduplicated for you, so run `search_assets` (or
-`list_assets`) and skip images already present.
-
 ## Limits and semantics
 
 - **Max 20 files per request** (`upload_assets` / multipart / `uploadAssets`).
