@@ -41,7 +41,9 @@ Most jobs follow the same five steps. Map intent to these tool verbs:
 2. **Read and dedupe** — `list_assets`, `search_assets`, `get_asset`, and
    `list_tags` to see what already exists before you write.
 3. **Upload** — `upload_asset` for one image, `upload_assets` for a batch.
-   Pass a public http(s) `url` when you have one, base64 for local files.
+   Pass a public http(s) `url` when you have one, base64 for local files. Set
+   `parentId` on `upload_asset` to attach the file as a variant (an alternate
+   version) of an existing asset instead of creating a new one.
 4. **Organize** — `tag_assets`, `untag_assets`, `update_asset_description` to
    make assets findable; `transfer_assets` to move them; `delete_assets` to
    trash them.
@@ -57,6 +59,7 @@ library, and a key, then run the loop.
 - **Read** — `list_assets`, `get_asset`, `search_assets` (ranked, with
   highlights), `list_tags`.
 - **Add** — `upload_asset`, `upload_assets`; each returns a permanent CDN `url`.
+  Upload a variant of an existing asset by passing `parentId` to `upload_asset`.
 - **Organize** — `tag_assets`, `untag_assets`, `update_asset_description`.
 - **Move and trash** — `transfer_assets`, `delete_assets` (recoverable trash).
 - **Structure** — `create_library`, `rename_library`.
