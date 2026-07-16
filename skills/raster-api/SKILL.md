@@ -90,7 +90,8 @@ references).
 2. **Read** — `list_assets`, `search_assets`, `get_asset`, `list_tags` to ground
    later actions in what already exists (for example, reuse a library's tags).
 3. **Upload** — `upload_asset` for one image, `upload_assets` for a batch. Pass a
-   public `http(s)` URL the server fetches, or base64 for local bytes.
+   public `http(s)` URL the server fetches, or base64 for local bytes. Set
+   `parentId` on `upload_asset` to add the file as a variant of an existing asset.
 4. **Organize** — `tag_assets`, `untag_assets`, `update_asset_description` to make
    assets findable; `transfer_assets` to move them; `delete_assets` to trash them.
 5. **Hand back** — return each asset's permanent CDN `url` and the library URL

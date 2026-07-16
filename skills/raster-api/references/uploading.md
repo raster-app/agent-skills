@@ -53,5 +53,36 @@ requires `filename` and `mimeType`; the `url` variant must be an `http(s)` URL.
 Over GraphQL, `uploadAssets` takes `files: [Upload!]!` plus `email` and returns
 `assets { id url }`.
 
+## Upload a variant of an existing asset
+
+Attach an upload as a **variant** of an existing asset instead of creating a new
+one, by passing its id as `parentId`. Exactly one file
+is allowed, and the parent must be an original asset in the same library. The
+returned asset carries that `parentId` and an `appUrl` that opens the parent with
+the variant selected; it is nested under the parent's `views`.
+
+REST — add a `parentId` form field:
+
+```bash
+curl -X POST 'https://api.raster.app/organizations/<orgId>/libraries/<libraryId>/assets' \
+  -H 'Authorization: Bearer <API_KEY>' -H 'Api-Version: 2026-05-20' \
+  -F 'files=@/path/to/variant.jpg' \
+  -F 'parentId=<PARENT_ASSET_ID>'
+```
+
+MCP — pass `parentId` to `upload_asset`:
+
+```json
+{
+  "name": "upload_asset",
+  "arguments": {
+    "organizationId": "<orgId>",
+    "libraryId": "<libraryId>",
+    "parentId": "<PARENT_ASSET_ID>",
+    "source": { "kind": "url", "url": "https://example.com/variant.jpg" }
+  }
+}
+```
+
 Full detail — REST: `https://raster.app/docs/api/rest/endpoints`. MCP tools:
 `https://raster.app/docs/api/mcp/tools`.
