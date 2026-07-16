@@ -25,7 +25,9 @@ across all three. Full reference: `https://raster.app/docs/api`.
 
 ## Quickstart
 
-**MCP** — point your client at `https://mcp.raster.app/` with a Bearer key, then:
+**MCP** — add `https://mcp.raster.app/` as a remote MCP server; your client runs
+the OAuth flow (sign in, pick one organization). For server-to-server, paste an
+API key instead. Then:
 
 ```json
 { "name": "whoami", "arguments": {} }
@@ -58,13 +60,23 @@ deliverable you hand back to the user.
 
 ## Authenticate
 
-Send `Authorization: Bearer <API_KEY>` on every call; REST also requires
-`Api-Version: 2026-05-20`. A key is scoped to **one organization** and
-an **allowlist of libraries**, each at a **read** or **write** access level.
-Create and scope keys in organization settings. An agent with no key can mint
-one from an email — see the `raster-start-without-account` skill.
+**MCP clients — OAuth (recommended).** Add `https://mcp.raster.app/` as a remote
+MCP server; the client discovers the authorization server, registers itself, and
+opens a Raster consent page where you sign in and pick **one organization**. The
+connection uses your library access and follows it live — change a role or a
+library and the connection follows, no reconnect. Revoke it under **Settings →
+Connected apps**.
 
-Details: `https://raster.app/docs/api/rest/authentication`.
+**Server-to-server, REST, and GraphQL — API key.** Send `Authorization: Bearer
+<API_KEY>`; REST also requires `Api-Version: 2026-05-20`. A key is scoped to **one
+organization** and an **allowlist of libraries**, each at **Read** or **Write**.
+Create and scope keys in organization settings.
+
+An agent with no account can mint a key from an email — see the
+`raster-start-without-account` skill.
+
+Details: `https://raster.app/docs/api/mcp/authentication` (MCP) and
+`https://raster.app/docs/api/rest/authentication` (REST / GraphQL).
 
 ## The loop
 
@@ -154,8 +166,9 @@ REST and GraphQL return **identical** HTTP statuses and messages. Full detail:
 ## Start with no account
 
 An agent holding no key can mint an organization, a starter library, and a usable
-key from a user's email in one call — `create_organization` over MCP, or
-`POST https://api.raster.app/libraries` over REST (no `Authorization` header). It
+key from a user's email in one call — `create_organization` on the MCP
+`/anonymous` endpoint, or `POST https://api.raster.app/libraries` over REST (no
+`Authorization` header). It
 returns `organizationId`, `libraryId`, `apiKey`, and a `claimUrl` the user follows
 to keep the work. Full recipe: [`references/no-account.md`](references/no-account.md)
 and the `raster-start-without-account` skill.

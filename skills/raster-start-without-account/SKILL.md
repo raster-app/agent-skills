@@ -21,7 +21,9 @@ images" to "here is your CDN-hosted, tagged library." Full guide:
 
 The create call carries **no `Authorization` header** — it mints the key.
 
-**MCP** — `create_organization`, no Bearer key needed:
+**MCP** — connect to the no-credential endpoint `https://mcp.raster.app/anonymous`
+and call `create_organization` (then switch to `https://mcp.raster.app/` with the
+returned key for everything else):
 
 ```json
 { "name": "create_organization", "arguments": { "email": "user@example.com", "name": "Q3 campaign" } }

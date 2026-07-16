@@ -1,15 +1,30 @@
 # Raster over MCP
 
-Endpoint: `https://mcp.raster.app/` (Streamable HTTP). Point any MCP-capable
-client at it — Claude, Cursor, VS Code, the OpenAI Responses API.
+Endpoint: `https://mcp.raster.app/` (Streamable HTTP). Any MCP-capable client —
+Claude, Cursor, VS Code, the OpenAI Responses API.
 
-Register it as a remote MCP server with an `Authorization: Bearer <API_KEY>`
-header, then call `whoami` first: it returns the `organizationId` and the
-libraries your key reaches. Every asset call needs that `organizationId` + a
-`libraryId`; `search_assets` is organization-scoped with an optional `libraries`
-subset. A library the key can't reach returns an out-of-scope (404) error.
-`tools/list` returns each tool's authoritative input schema — read it for exact
-argument names and types.
+## Connect
+
+**OAuth — recommended.** Add `https://mcp.raster.app/` as a remote MCP server. The
+client discovers the authorization server, registers itself, and opens a Raster
+consent page — sign in and pick **one organization**. The connection uses your
+library access and follows it live; revoke it under Settings → Connected apps.
+
+**API key — server-to-server.** Paste an organization-scoped key as an
+`Authorization: Bearer <API_KEY>` header when adding the server.
+
+**No account yet.** Connect to `https://mcp.raster.app/anonymous` (no credential).
+It serves only `create_organization`, which mints an organization, a starter
+library, and an API key; then connect to `https://mcp.raster.app/` with that key.
+See no-account.md.
+
+## Working
+
+Call `whoami` first: it returns the `organizationId` and the libraries you reach.
+Every asset call needs that `organizationId` + a `libraryId`; `search_assets` is
+organization-scoped with an optional `libraries` subset. A library you can't reach
+returns an out-of-scope (404) error. `tools/list` returns each tool's authoritative
+input schema — read it for exact argument names and types.
 
 ## Tools
 
