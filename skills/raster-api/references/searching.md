@@ -32,7 +32,7 @@ by the `id` from a list, search, or upload.
 
 ## What to return
 
-Each asset carries a permanent CDN `url` — the canonical, production-ready image
+Each asset carries a permanent CDN `url` — the canonical, production-ready asset
 link. Hand that `url` to the user. Pass its `tags` and `description` back as context,
 and point to the library at `raster.app/<organizationId>/<libraryId>`.
 

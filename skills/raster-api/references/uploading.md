@@ -1,6 +1,6 @@
-# Uploading images
+# Uploading assets
 
-Raster ingests an image three ways; pick the one your source and transport allow:
+Raster ingests an asset three ways; pick the one your source and transport allow:
 
 | You have                          | Use                                                  |
 | --------------------------------- | ---------------------------------------------------- |

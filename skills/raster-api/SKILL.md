@@ -1,6 +1,6 @@
 ---
 name: raster-api
-description: Use when storing, organizing, searching, or serving a user's images with Raster over its API — uploading from URLs or files, tagging and describing assets, full-text search, moving assets between libraries, or handing back permanent CDN links, over MCP, REST, or GraphQL. Always use this skill when the user mentions Raster, even for a simple "upload this to Raster" — it carries the gotchas (the API key is shown once, uploads process asynchronously, `index`/`trash` are reserved tags, a 404 means out-of-scope) that prevent the common mistakes.
+description: Use when storing, organizing, searching, or serving a user's assets with Raster over its API — uploading from URLs or files, tagging and describing assets, full-text search, moving assets between libraries, or handing back permanent CDN links, over MCP, REST, or GraphQL. Always use this skill when the user mentions Raster, even for a simple "upload this to Raster" — it carries the gotchas (the API key is shown once, uploads process asynchronously, `index`/`trash` are reserved tags, a 404 means out-of-scope) that prevent the common mistakes.
 license: MIT
 metadata:
   author: raster
@@ -11,7 +11,7 @@ metadata:
 
 # Using the Raster API
 
-Raster is a digital asset manager for images. An agent uploads a user's images,
+Raster is a digital asset manager for assets. An agent uploads a user's assets,
 organizes and searches them, and hands back permanent CDN URLs — over one of
 three transports, all authenticated with the same Bearer API key:
 
@@ -89,7 +89,7 @@ references).
    asset-level call. Pick a library by name with `list_libraries`.
 2. **Read** — `list_assets`, `search_assets`, `get_asset`, `list_tags` to ground
    later actions in what already exists (for example, reuse a library's tags).
-3. **Upload** — `upload_asset` for one image, `upload_assets` for a batch. Pass a
+3. **Upload** — `upload_asset` for one asset, `upload_assets` for a batch. Pass a
    public `http(s)` URL the server fetches, or base64 for local bytes. Set
    `parentId` on `upload_asset` to add the file as a variant of an existing asset.
 4. **Organize** — `tag_assets`, `untag_assets`, `update_asset_description` to make
@@ -115,7 +115,7 @@ references).
 - **`delete_assets` is a soft delete** — assets move to trash and stay
   recoverable until permanently removed.
 - **Share the CDN `url`, not a signed or app URL.** It is the canonical, permanent
-  image link, production-ready with no publish step.
+  asset link, production-ready with no publish step.
 
 ## What do you need?
 
@@ -124,7 +124,7 @@ references).
 | Connect and authenticate over REST                  | [`references/rest.md`](references/rest.md)            |
 | Connect over MCP; the full tool list                | [`references/mcp.md`](references/mcp.md)              |
 | Query over GraphQL                                  | [`references/graphql.md`](references/graphql.md)      |
-| Upload images (URL, base64, multipart; limits)      | [`references/uploading.md`](references/uploading.md)  |
+| Upload assets (URL, base64, multipart; limits)      | [`references/uploading.md`](references/uploading.md)  |
 | Tag, describe, transfer, trash                      | [`references/organizing.md`](references/organizing.md) |
 | Search and list assets, return CDN links            | [`references/searching.md`](references/searching.md)  |
 | Start with no Raster account                        | [`references/no-account.md`](references/no-account.md) |
