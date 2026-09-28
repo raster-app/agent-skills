@@ -34,7 +34,7 @@ you need to react to a specific failure. Canonical:
 | `ORGANIZATION_NOT_FOUND`            | 404  | `:organizationId` doesn't resolve to a known org.                                   |
 | `RESOURCE_NOT_FOUND`                | 404  | The referenced asset doesn't exist.                                                 |
 | `ENDPOINT_NOT_FOUND`                | 404  | Unknown REST path (distinct from a missing resource).                               |
-| `BAD_USER_INPUT`                    | 400  | Invalid body/params — malformed JSON, reserved `index`/`trash` tag, bad email, exhausted per-email create quota. Fix and resend. |
+| `BAD_USER_INPUT`                    | 400  | Invalid body/params — malformed JSON, reserved `index`/`trash` tag, bad email, exhausted per-email create quota, an upload with no accepted file (the message names each file and why). Fix and resend. |
 | `PAYLOAD_TOO_LARGE`                 | 413  | A file exceeds the per-file size limit. Shrink or split.                            |
 | `MAX_ASSETS_EXCEEDED`               | 400  | >20 files in an upload, or >100 ids in a delete. Split the batch.                   |
 | `UPLOAD_ERROR_NO_FILES`             | 400  | The upload carried no usable file parts.                                            |
