@@ -37,6 +37,7 @@ Resolve your scope with `GET /me` before any asset call.
 | `POST`   | `/organizations/:orgId/libraries/:libraryId/assets/tag`    | Tag (`assetIds`, `tags`).                                  |
 | `POST`   | `/organizations/:orgId/libraries/:libraryId/assets/untag`  | Untag (`assetIds`, `tags`).                                |
 | `PATCH`  | `/organizations/:orgId/libraries/:libraryId/assets/:assetId/description` | Set `description`.                            |
+| `PATCH`  | `/organizations/:orgId/libraries/:libraryId/assets/:assetId/approval` | Set `approval` (`state`, `note`; OAuth token only). |
 | `POST`   | `/organizations/:orgId/libraries/:libraryId/assets/transfer` | Move (source `:libraryId` → body `targetLibraryId`, `assetIds`). |
 | `GET`    | `/organizations/:orgId/search/assets?q=`                   | Search across authorized libraries.                        |
 | `POST`   | `/libraries`                                               | Anonymous create — no `Authorization` (see no-account.md). |

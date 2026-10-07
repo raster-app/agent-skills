@@ -53,6 +53,7 @@ Write
 | `tag_assets`               | Apply tags (`assetIds`, `tags`).                 |
 | `untag_assets`             | Remove tags.                                     |
 | `update_asset_description` | Replace one asset's description (verbatim).      |
+| `set_asset_approval`       | Set one asset's approval state (OAuth only).     |
 | `transfer_assets`          | Move assets between libraries in the org.        |
 | `delete_assets`            | Soft-delete up to 100 (recoverable from trash).  |
 

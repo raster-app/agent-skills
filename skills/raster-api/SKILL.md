@@ -1,6 +1,6 @@
 ---
 name: raster-api
-description: Use when storing, organizing, searching, or serving a user's assets with Raster over its API — uploading from URLs or files, tagging and describing assets, full-text search, moving assets between libraries, or handing back permanent CDN links, over MCP, REST, or GraphQL. Always use this skill when the user mentions Raster, even for a simple "upload this to Raster" — it carries the gotchas (the API key is shown once, uploads process asynchronously, `index`/`trash` are reserved tags, a 404 means out-of-scope) that prevent the common mistakes.
+description: Use when storing, organizing, searching, or serving a user's assets with Raster over its API — uploading from URLs or files, tagging and describing assets, full-text search, moving assets between libraries, or handing back permanent CDN links, over MCP or REST. Always use this skill when the user mentions Raster, even for a simple "upload this to Raster" — it carries the gotchas (the API key is shown once, uploads process asynchronously, `index`/`trash` are reserved tags, a 404 means out-of-scope) that prevent the common mistakes.
 license: MIT
 metadata:
   author: raster
@@ -18,7 +18,6 @@ three transports, all authenticated with the same Bearer API key:
 - **MCP** — `https://mcp.raster.app/` (Streamable HTTP). For agent clients like
   Claude, Cursor, VS Code, and the OpenAI Responses API.
 - **REST** — `https://api.raster.app`. Any HTTP client.
-- **GraphQL** — `https://api.raster.app/`. Same surface, one POST endpoint.
 
 Pick the transport your client speaks; the model and the loop below are identical
 across all three. Full reference: `https://raster.app/docs/api`.
@@ -56,7 +55,6 @@ deliverable you hand back to the user.
 | -------------------------------------------------------- | ---------- |
 | An agent platform that speaks MCP (Claude, Cursor, …)    | **MCP**    |
 | You control the HTTP layer, or you're in a shell/CI      | **REST**   |
-| You already query a GraphQL layer                        | **GraphQL** |
 
 ## Authenticate
 
@@ -67,7 +65,7 @@ connection uses your library access and follows it live — change a role or a
 library and the connection follows, no reconnect. Revoke it under **Settings →
 Connected apps**.
 
-**Server-to-server, REST, and GraphQL — API key.** Send `Authorization: Bearer
+**Server-to-server and REST — API key.** Send `Authorization: Bearer
 <API_KEY>`; REST also requires `Api-Version: 2026-05-20`. A key is scoped to **one
 organization** and an **allowlist of libraries**, each at **Read** or **Write**.
 Create and scope keys in organization settings.
@@ -76,13 +74,12 @@ An agent with no account can mint a key from an email — see the
 `raster-start-without-account` skill.
 
 Details: `https://raster.app/docs/api/mcp/authentication` (MCP) and
-`https://raster.app/docs/api/rest/authentication` (REST / GraphQL).
+`https://raster.app/docs/api/rest/authentication` (REST).
 
 ## The loop
 
 Most jobs follow the same five steps. Map the user's intent to these verbs; each
-names its MCP tool (the REST endpoint and GraphQL field are one-to-one — see the
-references).
+names its MCP tool (the REST endpoint is one-to-one — see the references).
 
 1. **Resolve scope** — `whoami` returns the `organizationId` and the libraries
    your key reaches. Pair that `organizationId` with a `libraryId` on every
@@ -93,7 +90,8 @@ references).
    public `http(s)` URL the server fetches, or base64 for local bytes. Set
    `parentId` on `upload_asset` to add the file as a variant of an existing asset.
 4. **Organize** — `tag_assets`, `untag_assets`, `update_asset_description` to make
-   assets findable; `transfer_assets` to move them; `delete_assets` to trash them.
+   assets findable; `transfer_assets` to move them; `delete_assets` to trash them;
+   `set_asset_approval` to record a review decision (OAuth connections only).
 5. **Hand back** — return each asset's permanent CDN `url` and the library URL
    (`raster.app/<organizationId>/<libraryId>`) to the user.
 
@@ -123,7 +121,6 @@ references).
 | --------------------------------------------------- | ---------------------------------------------------- |
 | Connect and authenticate over REST                  | [`references/rest.md`](references/rest.md)            |
 | Connect over MCP; the full tool list                | [`references/mcp.md`](references/mcp.md)              |
-| Query over GraphQL                                  | [`references/graphql.md`](references/graphql.md)      |
 | Upload assets (URL, base64, multipart; limits)      | [`references/uploading.md`](references/uploading.md)  |
 | Tag, describe, transfer, trash                      | [`references/organizing.md`](references/organizing.md) |
 | Search and list assets, return CDN links            | [`references/searching.md`](references/searching.md)  |
@@ -145,7 +142,7 @@ references).
 
 ## Error reference
 
-REST and GraphQL return **identical** HTTP statuses and messages. Full detail:
+REST and MCP return **identical** HTTP statuses and messages. Full detail:
 [`references/errors.md`](references/errors.md) and
 `https://raster.app/docs/api/rest/errors`.
 

@@ -6,8 +6,7 @@ batched.
 
 ## Tag and untag
 
-`tag_assets` / `untag_assets` (REST `POST .../assets/tag` and `/untag`, GraphQL
-`tagAssets` / `untagAssets`) take `assetIds` and `tags` and return `taggedCount` /
+`tag_assets` / `untag_assets` (REST `POST .../assets/tag` and `/untag`) take `assetIds` and `tags` and return `taggedCount` /
 `untaggedCount` — the count of `(asset, tag)` pairs that actually changed. Both are
 idempotent: re-tagging a pair the asset already has, or untagging one it lacks, is a
 silent skip.
@@ -26,23 +25,35 @@ curl -X POST 'https://api.raster.app/organizations/<orgId>/libraries/<libraryId>
 
 ## Describe
 
-`update_asset_description` (REST `PATCH .../assets/:assetId/description`, GraphQL
-`updateAssetDescription`) replaces one asset's `description`, stored verbatim — no
+`update_asset_description` (REST `PATCH .../assets/:assetId/description`) replaces one asset's `description`, stored verbatim — no
 trim, no rewrite. Pass an empty string to clear it. It echoes back
 `{ assetId, description }`.
 
+## Set approval
+
+`set_asset_approval` (REST `PATCH .../assets/:assetId/approval`) sets one asset's
+`approval` to `in_review`, `approved`, or `needs_changes`, with an optional `note`
+(up to 500 characters). Each call replaces the previous approval. It echoes back
+`{ assetId, approval }`.
+
+- It needs an **OAuth** connection or access token. An API key reads `approval` but
+  setting it fails with `403 APPROVAL_REQUIRES_USER` — ask the user to connect over
+  OAuth instead of retrying.
+- Setting approval needs a paid plan: without one it fails with
+  `403 PAID_PLAN_REQUIRED`. Surface it to the user; don't retry.
+- `approved` and `needs_changes` email the asset's uploader.
+
 ## Transfer between libraries
 
-`transfer_assets` (REST `POST .../assets/transfer`, GraphQL `transferAssets`) moves
+`transfer_assets` (REST `POST .../assets/transfer`) moves
 assets within the same organization. The source is the `:libraryId` in the path
-(MCP/GraphQL `sourceLibraryId`); the body names `targetLibraryId` and `assetIds`.
+(MCP `sourceLibraryId`); the body names `targetLibraryId` and `assetIds`.
 Every id must currently live in the source library, or the whole call fails. Returns
 `transferredCount`.
 
 ## Delete
 
-`delete_assets` (REST `DELETE .../assets` with body `ids`, GraphQL `deleteAssets`
-with `assets`) is a **soft delete** — up to 100 ids move to trash, leave lists and
+`delete_assets` (REST `DELETE .../assets` with body `ids`) is a **soft delete** — up to 100 ids move to trash, leave lists and
 search at once, and stay recoverable. It is idempotent: re-deleting a trashed id is
 a no-op.
 

@@ -1,6 +1,6 @@
 # Raster error reference
 
-REST and GraphQL return **identical** HTTP statuses and messages for the same
+REST and MCP return **identical** HTTP statuses and messages for the same
 coded failure. Every REST failure body is shaped:
 
 ```json
@@ -31,6 +31,8 @@ you need to react to a specific failure. Canonical:
 | `API_VERSION_REQUIRED`              | 400  | Add `Api-Version: 2026-05-20`.                                                       |
 | `API_KEY_NOT_AUTHORIZED_FOR_LIBRARY` | 404 | Key can't reach that library (unknown or not granted). Pick one `whoami` lists. 404 hides existence — not "retry". |
 | `API_KEY_READ_ONLY`                 | 403  | A read-only key (no Write on any library) tried to create a library. Use a key with Write access. |
+| `APPROVAL_REQUIRES_USER`            | 403  | An API key tried to set approval. Setting it needs an OAuth connection; ask the user to connect. |
+| `PAID_PLAN_REQUIRED`                | 403  | Setting approval needs a paid plan and the org has none. The user must upgrade. |
 | `ORGANIZATION_NOT_FOUND`            | 404  | `:organizationId` doesn't resolve to a known org.                                   |
 | `RESOURCE_NOT_FOUND`                | 404  | The referenced asset doesn't exist.                                                 |
 | `ENDPOINT_NOT_FOUND`                | 404  | Unknown REST path (distinct from a missing resource).                               |

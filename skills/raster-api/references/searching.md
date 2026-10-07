@@ -4,8 +4,7 @@ Three read verbs find assets and return the permanent CDN `url` you hand back.
 
 ## search_assets — across libraries
 
-`search_assets` (REST `GET /organizations/:orgId/search/assets?q=`, GraphQL
-`searchAssets`) runs a full-text query across every library the key authorizes,
+`search_assets` (REST `GET /organizations/:orgId/search/assets?q=`) runs a full-text query across every library the key authorizes,
 matching `name`, `description`, and `tags`. Hits come back relevance-ranked with
 highlighted snippets.
 
@@ -13,6 +12,8 @@ highlighted snippets.
   "what's in here?".
 - Repeat the `libraries` param (REST `?libraries=a,b`) to narrow to a subset. Naming
   a library the key can't reach fails the whole call.
+- Pass `approval` (`in_review`, `approved`, `needs_changes`, or `none`) to return
+  only assets in that approval state.
 
 ```bash
 curl 'https://api.raster.app/organizations/<orgId>/search/assets?q=golden%20hour&libraries=<libraryId>' \
@@ -21,13 +22,13 @@ curl 'https://api.raster.app/organizations/<orgId>/search/assets?q=golden%20hour
 
 ## list_assets — one library
 
-`list_assets` (REST `GET .../libraries/:libraryId/assets`, GraphQL `assets`) pages
+`list_assets` (REST `GET .../libraries/:libraryId/assets`) pages
 through a single library. Filter with `tags` (max 5) to return only assets carrying
 them; paginate with `page` / `pageSize`.
 
 ## get_asset — one by id
 
-`get_asset` (REST `GET .../assets/:assetId`, GraphQL `asset`) returns a single asset
+`get_asset` (REST `GET .../assets/:assetId`) returns a single asset
 by the `id` from a list, search, or upload.
 
 ## What to return

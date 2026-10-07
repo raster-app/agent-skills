@@ -4,16 +4,16 @@ Raster ingests an asset three ways; pick the one your source and transport allow
 
 | You have                          | Use                                                  |
 | --------------------------------- | ---------------------------------------------------- |
-| A public `http(s)` URL            | MCP/GraphQL `url` source — the server fetches it.    |
+| A public `http(s)` URL            | MCP `url` source — the server fetches it.            |
 | Local bytes over MCP              | inline base64 `source`.                              |
-| Local files over REST or GraphQL  | `multipart/form-data`.                               |
+| Local files over REST             | `multipart/form-data`.                               |
 
 Every path returns each asset's permanent CDN `url` and `id` right away — that
 `url` is the canonical link you hand back.
 
 ## Limits and semantics
 
-- **Max 20 files per request** (`upload_assets` / multipart / `uploadAssets`).
+- **Max 20 files per request** (`upload_assets` / multipart).
 - **All-or-nothing.** Every source is validated (schema, address safety, size)
   before any byte is stored; one bad source fails the whole batch. Fix it and resend.
 - **Asynchronous.** `url` and `id` come back immediately, but the asset appears in
@@ -50,8 +50,6 @@ payload, and the two may be mixed:
 
 Use `upload_asset` with a single `source` for one file. The base64 variant
 requires `filename` and `mimeType`; the `url` variant must be an `http(s)` URL.
-Over GraphQL, `uploadAssets` takes `files: [Upload!]!` plus `email` and returns
-`assets { id url }`.
 
 ## Upload a variant of an existing asset
 
