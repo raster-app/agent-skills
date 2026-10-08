@@ -1,32 +1,32 @@
 # Organizing assets
 
 Make assets findable and move them between libraries. Each operation is scoped to
-one library (`organizationId` + `libraryId`) and, except `update_asset_description`,
-batched.
+one library (`organizationId` + `libraryId`). All are batched except
+`update_asset_description` and `set_asset_approval`, which act on one asset.
 
 ## Tag and untag
 
-`tag_assets` / `untag_assets` (REST `POST .../assets/tag` and `/untag`) take `assetIds` and `tags` and return `taggedCount` /
-`untaggedCount` — the count of `(asset, tag)` pairs that actually changed. Both are
-idempotent: re-tagging a pair the asset already has, or untagging one it lacks, is a
-silent skip.
+`tag_assets` / `untag_assets` (REST `POST .../assets/tag` and `/untag`) take `assetIds` and `tags`. They return `taggedCount` /
+`untaggedCount`, the number of `(asset, tag)` pairs this call added or removed. Both
+are idempotent: a pair the asset already has (on tag) or lacks (on untag) is
+skipped.
 
-- `index` and `trash` are **reserved tags** — either call rejects them with
-  `BAD_USER_INPUT` before any write.
+- `index` and `trash` are reserved tags. Either call rejects them with
+  `BAD_USER_INPUT` before changing anything.
 - Every asset must belong to the named library; any mismatch fails the whole call.
 - Up to 100 `assetIds` and 20 `tags` per call.
 
 ```bash
 curl -X POST 'https://api.raster.app/organizations/<orgId>/libraries/<libraryId>/assets/tag' \
-  -H 'Authorization: Bearer <API_KEY>' -H 'Api-Version: 2026-05-20' \
+  -H 'Authorization: Bearer <API_KEY>' -H 'Api-Version: 2026-07-08' \
   -H 'Content-Type: application/json' \
   -d '{"assetIds":["<id1>","<id2>"],"tags":["sunset","landscape"]}'
 ```
 
 ## Describe
 
-`update_asset_description` (REST `PATCH .../assets/:assetId/description`) replaces one asset's `description`, stored verbatim — no
-trim, no rewrite. Pass an empty string to clear it. It echoes back
+`update_asset_description` (REST `PATCH .../assets/:assetId/description`) replaces one asset's `description`, stored verbatim with no
+trimming and no rewrite. Pass an empty string to clear it. It echoes back
 `{ assetId, description }`.
 
 ## Set approval
@@ -36,26 +36,27 @@ trim, no rewrite. Pass an empty string to clear it. It echoes back
 (up to 500 characters). Each call replaces the previous approval. It echoes back
 `{ assetId, approval }`.
 
-- It needs an **OAuth** connection or access token. An API key reads `approval` but
-  setting it fails with `403 APPROVAL_REQUIRES_USER` — ask the user to connect over
-  OAuth instead of retrying.
-- Setting approval needs a paid plan: without one it fails with
+- It needs an OAuth connection or access token. An API key can read `approval`,
+  but setting it fails with `403 APPROVAL_REQUIRES_USER`. Ask the user to connect
+  over OAuth instead of retrying.
+- Setting approval needs a paid plan. Without one it fails with
   `403 PAID_PLAN_REQUIRED`. Surface it to the user; don't retry.
-- `approved` and `needs_changes` email the asset's uploader.
+- `approved` and `needs_changes` email the asset's uploader, unless the uploader
+  set the approval.
 
 ## Transfer between libraries
 
 `transfer_assets` (REST `POST .../assets/transfer`) moves
 assets within the same organization. The source is the `:libraryId` in the path
 (MCP `sourceLibraryId`); the body names `targetLibraryId` and `assetIds`.
-Every id must currently live in the source library, or the whole call fails. Returns
-`transferredCount`.
+Every id must currently be in the source library, or the whole call fails. It
+returns `transferredCount`.
 
 ## Delete
 
-`delete_assets` (REST `DELETE .../assets` with body `ids`) is a **soft delete** — up to 100 ids move to trash, leave lists and
-search at once, and stay recoverable. It is idempotent: re-deleting a trashed id is
-a no-op.
+`delete_assets` (REST `DELETE .../assets` with body `ids`) is a soft delete. Up to 100 ids move to trash and leave lists and
+search at once. They stay recoverable for 30 days, then are permanently removed.
+It is idempotent: re-deleting a trashed id changes nothing.
 
 Full reference: `https://raster.app/docs/api/rest/endpoints` and
 `https://raster.app/docs/api/mcp/tools`. Task guide:
