@@ -33,6 +33,29 @@ npx skills add raster-app/agent-skills -a claude-code -a cursor
 `raster-api` ships a `references/` folder (rest, mcp, uploading, organizing,
 searching, no-account, errors) that the agent loads on demand.
 
+## Cursor plugin
+
+This repo is also a [Cursor plugin](https://cursor.com/docs/plugins). The
+manifest at `.cursor-plugin/plugin.json` bundles the three skills in `skills/`
+and the remote Raster MCP server in `mcp.json`:
+
+```json
+{
+  "mcpServers": {
+    "raster": { "type": "streamable-http", "url": "https://mcp.raster.app/" }
+  }
+}
+```
+
+The server uses OAuth, so no API key is stored in the plugin. On first use,
+Cursor opens a Raster sign-in and you grant one organization (or all of yours).
+
+To try it locally before it is in the Cursor Marketplace, copy this repo into
+`~/.cursor/plugins/local/raster` (a folder, not a symlink), run
+**Developer: Reload Window**, and check **Customize** for the `raster` MCP
+server and the `raster-api`, `raster-cli`, and `raster-start-without-account`
+skills.
+
 ## Authentication
 
 The `raster-api` skill works over an MCP OAuth connection or with a Raster API
