@@ -1,0 +1,14 @@
+{
+  "name": "raster",
+  "displayName": "Raster",
+  "version": "1.0.0",
+  "description": "Use Raster directly in Cursor. Store, organize, search, and serve your images and other assets over the Raster MCP server, with skills for the API, the raster CLI, and starting without an account.",
+  "author": {
+    "name": "Raster"
+  },
+  "homepage": "https://raster.app",
+  "repository": "https://github.com/raster-app/agent-skills",
+  "license": "MIT",
+  "keywords": ["raster", "assets", "images", "media", "dam", "cdn", "search", "mcp", "skills"],
+  "logo": "assets/logo.png"
+}
