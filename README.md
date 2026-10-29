@@ -28,15 +28,43 @@ npx skills add raster-app/agent-skills -a claude-code -a cursor
 | ------------------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------- |
 | `raster-api`                   | An agent should use the Raster API over MCP or REST: authentication, the upload/tag/search/hand-off loop, and starting with no Raster account. |
 | `raster-cli`                   | An agent should drive Raster from a terminal or CI with the `raster` command-line client.                                                      |
-| `raster-start-without-account` | You want to give a user a hosted library before they have a Raster account. One call creates an organization, library, and key from an email. |
+| `raster-start-without-account` | You want to give a user a hosted library before they have a Raster account. One call creates an organization, library, and key from an email.  |
 
 `raster-api` ships a `references/` folder (rest, mcp, uploading, organizing,
 searching, no-account, errors) that the agent loads on demand.
 
+## Claude Code plugin
+
+This repo is also a Claude Code plugin and its own plugin marketplace. The
+plugin bundles the skills in `skills/` and the remote Raster MCP server.
+Install it from a Claude Code session (v2.1.275 or later):
+
+```text
+/plugin install raster --marketplace raster-app/agent-skills
+```
+
+On an earlier version, add the marketplace, then install:
+
+```text
+/plugin marketplace add raster-app/agent-skills
+/plugin install raster@raster
+```
+
+From a shell (v2.1.292 or later), run
+`claude plugin install raster --marketplace raster-app/agent-skills`.
+
+The server signs in with OAuth: run `/mcp`, sign in to Raster, and choose the
+organizations the connection may access. If you already added
+`https://mcp.raster.app/` with `claude mcp add`, Claude Code keeps that
+connection and `/mcp` lists it in place of the plugin's server.
+
+To get updates as they ship, turn on auto-update for the `raster` marketplace in
+`/plugin` → **Marketplaces**.
+
 ## Cursor plugin
 
 This repo is also a [Cursor plugin](https://cursor.com/docs/plugins). The
-manifest at `.cursor-plugin/plugin.json` bundles the three skills in `skills/`
+manifest at `.cursor-plugin/plugin.json` bundles the skills in `skills/`
 and the remote Raster MCP server in `mcp.json`:
 
 ```json

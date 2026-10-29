@@ -1,0 +1,14 @@
+{
+	"name": "raster",
+	"description": "The Raster plugin: Raster's MCP server and agent skills.",
+	"owner": {
+		"name": "Raster",
+		"email": "support@raster.app"
+	},
+	"plugins": [
+		{
+			"name": "raster",
+			"source": "./"
+		}
+	]
+}

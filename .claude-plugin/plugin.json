@@ -1,0 +1,24 @@
+{
+	"name": "raster",
+	"displayName": "Raster",
+	"description": "Browse, search, upload, organize, and delete assets in your Raster libraries, with Raster's MCP server and agent skills.",
+	"author": {
+		"name": "Raster",
+		"email": "support@raster.app",
+		"url": "https://raster.app"
+	},
+	"homepage": "https://raster.app/docs/api/mcp",
+	"repository": "https://github.com/raster-app/agent-skills",
+	"license": "MIT",
+	"keywords": ["raster", "assets", "images", "media", "dam", "cdn", "search", "mcp", "skills"],
+	"icon": "./assets/logo.png",
+	"documentationUrl": "https://raster.app/docs/api/mcp",
+	"privacyPolicyUrl": "https://raster.app/privacy",
+	"termsOfServiceUrl": "https://raster.app/terms",
+	"mcpServers": {
+		"raster": {
+			"type": "http",
+			"url": "https://mcp.raster.app/"
+		}
+	}
+}
