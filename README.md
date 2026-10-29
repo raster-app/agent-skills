@@ -54,7 +54,7 @@ From a shell (v2.1.292 or later), run
 `claude plugin install raster --marketplace raster-app/agent-skills`.
 
 The server signs in with OAuth: run `/mcp`, sign in to Raster, and choose the
-organizations the connection may access. If you already added
+organization the connection may access. If you already added
 `https://mcp.raster.app/` with `claude mcp add`, Claude Code keeps that
 connection and `/mcp` lists it in place of the plugin's server.
 
