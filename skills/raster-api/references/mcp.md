@@ -45,6 +45,8 @@ Read
 | `list_libraries` | Libraries in an organization.                         |
 | `list_assets`    | Assets in one library (paginate; `tags` filter).      |
 | `search_assets`  | Ranked search across authorized libraries (highlights). |
+| `list_saved_searches` | Saved searches you can read (OAuth connection only). |
+| `search_saved_search` | Run a saved search by its `id` (OAuth connection only). |
 | `list_tags`      | A library's tags by usage.                            |
 | `get_asset`      | One asset by id.                                      |
 
