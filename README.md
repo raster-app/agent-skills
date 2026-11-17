@@ -29,6 +29,7 @@ npx skills add raster-app/agent-skills -a claude-code -a cursor
 | `raster-api`                   | An agent should use the Raster API over MCP or REST: authentication, the upload/tag/search/hand-off loop, and starting with no Raster account. |
 | `raster-cli`                   | An agent should drive Raster from a terminal or CI with the `raster` command-line client.                                                      |
 | `raster-start-without-account` | You want to give a user a hosted library before they have a Raster account. One call creates an organization, library, and key from an email.  |
+| `raster-app-integration`       | An agent is building an app or website on Raster with `@raster-app/sdk`: paging, thumbnails, search, and share links.                          |
 
 `raster-api` ships a `references/` folder (rest, mcp, uploading, organizing,
 searching, no-account, errors) that the agent loads on demand.
@@ -81,8 +82,8 @@ Cursor opens a Raster sign-in and you grant one organization (or all of yours).
 To try it locally before it is in the Cursor Marketplace, copy this repo into
 `~/.cursor/plugins/local/raster` (a folder, not a symlink), run
 **Developer: Reload Window**, and check **Customize** for the `raster` MCP
-server and the `raster-api`, `raster-cli`, and `raster-start-without-account`
-skills.
+server and the `raster-api`, `raster-cli`, `raster-start-without-account`, and
+`raster-app-integration` skills.
 
 ## Authentication
 

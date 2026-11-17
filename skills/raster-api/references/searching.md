@@ -4,9 +4,13 @@ Three read verbs find assets and return the permanent CDN `url` you hand back.
 
 ## search_assets — across libraries
 
-`search_assets` (REST `GET /organizations/:orgId/search/assets?q=`) runs a full-text query across every library your credential can reach,
-matching `name`, `description`, and `tags`. Hits come back ranked by relevance,
+`search_assets` (REST `GET /organizations/:orgId/search/assets?q=`) searches
+every library your credential can reach. Hits come back ranked by relevance,
 with highlighted snippets.
+
+Search matches the query's words in `name`, `description`, and `tags`. On
+paid plans it also matches by meaning, so a query such as
+`kids blowing out birthday candles` finds assets that share no word with it.
 
 - Empty or whitespace `q` returns recent assets in scope (no ranking), a quick
   look at what's in there.

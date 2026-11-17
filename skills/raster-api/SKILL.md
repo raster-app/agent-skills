@@ -1,6 +1,6 @@
 ---
 name: raster-api
-description: Use when storing, organizing, searching, or serving a user's assets with Raster over its MCP or REST API, such as uploading from URLs or files, tagging and describing assets, full-text search, moving assets between libraries, or handing back permanent CDN links. Always use this skill when the user mentions Raster, even for a simple "upload this to Raster". It carries the gotchas that prevent the common mistakes (a no-account API key is returned only once, a new upload reaches lists and search a few seconds late, `index` and `trash` are reserved tags, a 404 means out of scope).
+description: Use when storing, organizing, searching, or serving a user's assets with Raster over its MCP or REST API, such as uploading from URLs or files, tagging and describing assets, keyword and semantic search, moving assets between libraries, or handing back permanent CDN links. Always use this skill when the user mentions Raster, even for a simple "upload this to Raster". It carries the gotchas that prevent the common mistakes (a no-account API key is returned only once, a new upload reaches lists and search a few seconds late, `index` and `trash` are reserved tags, a 404 means out of scope).
 license: MIT
 metadata:
   author: raster
@@ -129,6 +129,15 @@ references).
   30 days, and are then permanently removed.
 - Share the CDN `url`, not a signed or app URL. It is the canonical, permanent
   asset link and needs no publish step.
+- `sizes` is a JSON string of a sparse map, filled seconds after upload: only
+  sizes smaller than the source exist. Parse it and pick the smallest size at
+  least your display edge; fall back to `url` when it's empty.
+- `list_assets` returns no total. Never walk a whole library to count it: a
+  library's `assetsCount` comes with `list_libraries`. Page while a page comes
+  back full.
+- `search_assets` combines keyword and semantic matching, so pass
+  natural-language queries. Semantic matching is included on paid plans; on the
+  free plan, and whenever it is unavailable, results are keyword matches only.
 
 ## What do you need?
 
@@ -192,3 +201,5 @@ a `claimUrl` the user follows to keep the work. Full recipe:
 - REST endpoints: `https://raster.app/docs/api/rest/endpoints`
 - Errors: `https://raster.app/docs/api/rest/errors`
 - Drive Raster from a terminal with the `raster-cli` skill.
+- Building an app or website on Raster (grids, paging, thumbnails, search UX):
+  the `raster-app-integration` skill.
