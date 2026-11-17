@@ -30,6 +30,7 @@ Resolve your scope with `GET /me` before any asset call.
 | `GET`    | `/me`                                                      | Resolve org + library scope.                               |
 | `GET`    | `/organizations/:orgId/libraries`                          | List libraries.                                            |
 | `POST`   | `/organizations/:orgId/libraries`                          | Create a library (`name`; optional `slug`).                |
+| `GET`    | `/organizations/:orgId/libraries/:libraryId`               | Get one library (`assetsCount`, `trashCount`, tags).       |
 | `PATCH`  | `/organizations/:orgId/libraries/:libraryId`               | Rename (`name`).                                           |
 | `GET`    | `/organizations/:orgId/libraries/:libraryId/assets`        | List assets (filter `?tags=a,b`; paginate).                |
 | `GET`    | `/organizations/:orgId/libraries/:libraryId/assets/:assetId` | Get one asset.                                           |

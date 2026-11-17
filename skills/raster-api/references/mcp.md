@@ -43,6 +43,7 @@ Read
 | Tool             | Purpose                                                |
 | ---------------- | ----------------------------------------------------- |
 | `list_libraries` | Libraries in an organization.                         |
+| `get_library`    | One library: asset counts and tags.                   |
 | `list_assets`    | Assets in one library (paginate; `tags` filter).      |
 | `search_assets`  | Ranked search across authorized libraries (highlights). |
 | `list_saved_searches` | Saved searches you can read (OAuth connection only). |
