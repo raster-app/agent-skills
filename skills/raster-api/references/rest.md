@@ -32,7 +32,7 @@ Resolve your scope with `GET /me` before any asset call.
 | `POST`   | `/organizations/:orgId/libraries`                          | Create a library (`name`; optional `slug`).                |
 | `GET`    | `/organizations/:orgId/libraries/:libraryId`               | Get one library (`assetsCount`, `trashCount`, tags).       |
 | `PATCH`  | `/organizations/:orgId/libraries/:libraryId`               | Rename (`name`).                                           |
-| `GET`    | `/organizations/:orgId/libraries/:libraryId/assets`        | List assets, newest first (`?tags=a,b`, `?approval=`; paginate). |
+| `GET`    | `/organizations/:orgId/libraries/:libraryId/assets`        | List assets, newest first (`?tags=a,b`, `?approval=`, `?mediaType=image`; paginate). |
 | `GET`    | `/organizations/:orgId/libraries/:libraryId/assets/:assetId` | Get one asset.                                           |
 | `GET`    | `/organizations/:orgId/libraries/:libraryId/tags`          | List a library's tags.                                     |
 | `POST`   | `/organizations/:orgId/libraries/:libraryId/assets`        | Upload (multipart; max 20 files).                          |
@@ -65,7 +65,8 @@ curl 'https://api.raster.app/organizations/<orgId>/libraries/<libraryId>/assets?
 ```
 
 The response is `{ data, pageInfo: { hasNextPage, total, nextCursor } }`. Read
-`total` for the count; never walk the library to count it. For the next page,
+`total` for the count; never walk the library to count it. `mediaType=image`
+(or `video`) narrows the list and its `total` to one kind. For the next page,
 send `after=<nextCursor>` (without `page`) until `hasNextPage` is `false`.
 
 Upload local files (repeat `-F files=@`, max 20; let curl set the multipart `Content-Type`):
