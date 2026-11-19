@@ -89,5 +89,28 @@ MCP: pass `parentId` to `upload_asset`:
 }
 ```
 
+## Attribute an upload to your user
+
+An integration uploading for its own users with one API key names the user each
+upload belongs to: `uploaderRef` (your stable id for the user) plus optional
+name, email and an `https` avatar URL. The asset's `uploadedBy` shows that user;
+when the email belongs to a Raster account, the asset is that account's upload.
+A field sent replaces the one stored for that ref; a field left out keeps it.
+
+REST: add form fields:
+
+```bash
+curl -X POST 'https://api.raster.app/organizations/<orgId>/libraries/<libraryId>/assets' \
+  -H 'Authorization: Bearer <API_KEY>' -H 'Api-Version: 2026-07-08' \
+  -F 'files=@/path/to/photo.jpg' \
+  -F 'uploaderRef=<YOUR_USER_ID>' -F 'uploaderName=Ana Silva' -F 'uploaderEmail=ana@example.com'
+```
+
+MCP: pass `uploader` to `upload_asset` or `upload_assets`:
+`"uploader": { "ref": "<YOUR_USER_ID>", "name": "Ana Silva", "avatarUrl": "https://…" }`.
+
+Count one user's uploads with `uploaderRef=<YOUR_USER_ID>`, or every attributed
+upload with `uploader=external`, on the asset list; read `pageInfo.total`.
+
 Full detail for REST: `https://raster.app/docs/api/rest/endpoints`. MCP tools:
 `https://raster.app/docs/api/mcp/tools`.

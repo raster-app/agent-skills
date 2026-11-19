@@ -102,6 +102,7 @@ references).
 3. Upload with `upload_asset` for one asset or `upload_assets` for a batch. Pass
    a public `http(s)` URL the server fetches, or base64 for local bytes. Set
    `parentId` on `upload_asset` to add the file as a variant of an existing asset.
+   Set `uploader` to attribute an API-key upload to your own user.
 4. Organize with `tag_assets`, `untag_assets`, and `update_asset_description` to
    make assets findable, `transfer_assets` to move them, `delete_assets` to trash
    them, and `set_asset_approval` to record a review decision (OAuth connections
