@@ -91,26 +91,28 @@ MCP: pass `parentId` to `upload_asset`:
 
 ## Attribute an upload to your user
 
-An integration uploading for its own users with one API key names the user each
-upload belongs to: `uploaderRef` (your stable id for the user) plus optional
-name, email and an `https` avatar URL. The asset's `uploadedBy` shows that user;
-when the email belongs to a Raster account, the asset is that account's upload.
-A field sent replaces the one stored for that ref; a field left out keeps it.
+Optional. If your app uploads files for its users with one API key, say which
+user each upload is for: `uploaderRef` is your ID for the user, and their name,
+email and `https` avatar link are optional extras sent with it. Raster shows that
+user as the uploader and remembers the details per `uploaderRef`, so later
+uploads can send `uploaderRef` alone. If the email matches a Raster account, the
+upload shows as that account's. Without these fields, uploads work as before.
 
-REST: add form fields:
+REST: add these form fields:
 
 ```bash
 curl -X POST 'https://api.raster.app/organizations/<orgId>/libraries/<libraryId>/assets' \
   -H 'Authorization: Bearer <API_KEY>' -H 'Api-Version: 2026-07-08' \
   -F 'files=@/path/to/photo.jpg' \
-  -F 'uploaderRef=<YOUR_USER_ID>' -F 'uploaderName=Ana Silva' -F 'uploaderEmail=ana@example.com'
+  -F 'uploaderRef=<YOUR_USER_ID>' -F 'uploaderName=John Doe' -F 'uploaderEmail=john@example.com'
 ```
 
 MCP: pass `uploader` to `upload_asset` or `upload_assets`:
-`"uploader": { "ref": "<YOUR_USER_ID>", "name": "Ana Silva", "avatarUrl": "https://…" }`.
+`"uploader": { "ref": "<YOUR_USER_ID>", "name": "John Doe", "avatarUrl": "https://…" }`.
 
-Count one user's uploads with `uploaderRef=<YOUR_USER_ID>`, or every attributed
-upload with `uploader=external`, on the asset list; read `pageInfo.total`.
+To count one user's uploads, list assets with `uploaderRef=<YOUR_USER_ID>` and
+read `pageInfo.total`. `uploader=external` counts the uploads made for any of
+your users.
 
 Full detail for REST: `https://raster.app/docs/api/rest/endpoints`. MCP tools:
 `https://raster.app/docs/api/mcp/tools`.

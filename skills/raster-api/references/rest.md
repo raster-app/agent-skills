@@ -69,7 +69,8 @@ curl 'https://api.raster.app/organizations/<orgId>/libraries/<libraryId>/assets?
 The response is `{ data, pageInfo: { hasNextPage, total, nextCursor } }`. Read
 `total` for the count; never walk the library to count it. `mediaType=image`
 (or `video`) narrows the list and its `total` to one kind. `uploaderRef=<ref>`
-narrows them to one uploader's assets, `uploader=external` to every attributed upload. For the next page,
+narrows them to one of your users' uploads, and `uploader=external` to the
+uploads made for any of them. For the next page,
 send `after=<nextCursor>` (without `page`) until `hasNextPage` is `false`.
 
 Upload local files (repeat `-F files=@`, max 20; let curl set the multipart `Content-Type`):
