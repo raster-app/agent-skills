@@ -34,7 +34,7 @@ you need to react to a specific failure. Canonical:
 | `INVALID_API_KEY`                   | 401  | The bearer token isn't a key in that organization.                                  |
 | `API_VERSION_REQUIRED`              | 400  | Add `Api-Version: 2026-07-08`.                                                       |
 | `API_KEY_NOT_AUTHORIZED_FOR_LIBRARY` | 404 | Key can't reach that library: it doesn't exist or isn't granted, and both get the same 404. Pick one `whoami` lists instead of retrying. |
-| `API_KEY_READ_ONLY`                 | 403  | A read-only key (no Write on any library) tried to create a library. Use a key with Write access. |
+| `API_KEY_READ_ONLY`                 | 403  | A read-only key (no Write on any library, or Read on all libraries) tried to create a library. Use a key with Write access. |
 | `FORBIDDEN`                         | 403  | An OAuth connection tried to create a library and the user isn't an Owner of the organization, or setting approval isn't available to the user's account. |
 | `APPROVAL_REQUIRES_USER`            | 403  | An API key tried to set approval. Setting it needs an OAuth connection; ask the user to connect. |
 | `PAID_PLAN_REQUIRED`                | 403  | Setting approval needs a paid plan and the org has none. The user must upgrade. |

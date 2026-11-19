@@ -24,7 +24,9 @@ that key. See no-account.md.
 
 ## Working
 
-Call `whoami` first. It returns the `organizationId` and the libraries you reach.
+Call `whoami` first. It returns the `organizationId` and the libraries you reach;
+`organizationAccess` is `read` or `write` when an API key reaches every library in
+the organization, including ones created later.
 Every asset call needs that `organizationId` and a `libraryId`; `search_assets` is
 organization-scoped with an optional `libraries` subset. A library you can't reach
 returns an out-of-scope (404) error. `tools/list` returns each tool's authoritative

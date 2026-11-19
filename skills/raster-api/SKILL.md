@@ -91,7 +91,9 @@ step names its MCP tools, which map one-to-one to REST endpoints (see the
 references).
 
 1. Resolve scope with `whoami`, which returns the `organizationId` and the
-   libraries your credential reaches. Pair that `organizationId` with a
+   libraries your credential reaches. `organizationAccess` (`read` or `write`)
+   means an API key reaches every library in the organization, including ones
+   created later; `null` means only the libraries listed. Pair that `organizationId` with a
    `libraryId` on every asset-level call. Pick a library by name with
    `list_libraries`.
 2. Read with `list_assets`, `search_assets`, `get_asset`, and `list_tags` to
@@ -177,7 +179,7 @@ detail: [`references/errors.md`](references/errors.md) and
 | `UNAUTHENTICATED` / `INVALID_API_KEY` | 401  | Missing or wrong key. Send `Authorization: Bearer <key>`.                 |
 | `API_VERSION_REQUIRED`               | 400  | Add `Api-Version: 2026-07-08`.                                            |
 | `API_KEY_NOT_AUTHORIZED_FOR_LIBRARY` | 404  | Key can't reach that library. Pick one `whoami` lists.                    |
-| `API_KEY_READ_ONLY`                  | 403  | A read-only key tried to create a library. Use a key with Write on a library. |
+| `API_KEY_READ_ONLY`                  | 403  | A read-only key tried to create a library. Use a key with Write on a library or on all libraries. |
 | `BAD_USER_INPUT`                     | 400  | Invalid body or params, including a reserved tag, a bad email, more than 20 files in an upload, or more than 100 ids in a delete (over MCP these two limits are refused as `-32602` schema errors). Fix and resend; split an oversized batch. |
 | `PAYLOAD_TOO_LARGE`                  | 413  | A REST file exceeds the per-file limit, or an MCP request body is over 32 MB. Shrink or split. |
 | `STORAGE_LIMIT_EXCEEDED` / `LIBRARY_LOCKED` | 403 | Free-plan cap reached. The user must upgrade.                    |

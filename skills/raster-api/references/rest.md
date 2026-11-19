@@ -19,7 +19,9 @@ specific failure. Full codes: `https://raster.app/docs/api/rest/errors`.
 A key belongs to one organization and an allowlist of libraries, each at read or
 write access. Every asset-level path takes an `:organizationId` + `:libraryId`
 pair; a library the key can't reach returns `404` (treat it as out of scope).
-Resolve your scope with `GET /me` before any asset call.
+Resolve your scope with `GET /me` before any asset call; its `organizationAccess`
+is `read` or `write` when the key reaches every library in the organization,
+including ones created later.
 
 ## Endpoints
 
